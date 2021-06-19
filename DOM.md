@@ -5,7 +5,7 @@
 - BOM (browers object model) 浏览器对象模型
 - ECMAScript js 的核心
 
-![DOM树](./DOMltree.gif)
+![DOMltree](DOM.assets/DOMltree.gif)
 
 ## DOM 节点
 - 节点分类
