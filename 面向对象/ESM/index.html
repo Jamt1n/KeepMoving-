@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="module">
+// 1、ESM  2、commonjs(nodejs)
+// import './a.js'
+import f, { a as c, b } from './a.js'
+import myfn from './a.js'
+console.log(c, b)
+myfn();
+
+// import * as obj from './a.js'
+
+// 按需加载
+document.onclick = function () {
+    // import f, { a as c, b } from './a.js';
+    import("./a.js").then(res => {
+        console.log(res);
+    });
+}
+</script>
+</body>
+</html>
