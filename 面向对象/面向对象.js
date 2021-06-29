@@ -77,7 +77,7 @@ class Person {
   }
 }
 
-// 访问器属性
+// 四、访问器属性
 class Person {
   constructor() {
     // this.name = "张三";
@@ -91,3 +91,48 @@ class Person {
 }
 let zhangsan = new Person();
 console.log(zhangsan.name)
+
+// 五、继承
+// ES5
+function Dad() {
+  this.name = "张三";
+  this.age = 20;
+}
+function Son() {
+  Dad.call(this);
+}
+// ES6
+class Dad {
+  constructor(name) {
+    this.name = name;
+  }
+  fn() {
+    console.log("fn");
+  }
+}
+class Son extends Dad {
+  constructor(name) {
+    super(name);
+    // console.log(super); // 不能单独使用
+  }
+  test() {
+    super.fn();
+  }
+}
+
+// 六、类——抽象-》抽象基类
+// 不允许直接被实例化
+class AbstractPerson {
+  constructor() {
+    if (new.target === AbstractPerson) {
+      throw new Error("AbstractPersons是抽象基类不能被直接实例化")
+    }
+    this.age = 20;
+  }
+}
+class Person extends AbstractPerson {
+  constructor() {
+    super();
+    this.name = name;
+  }
+}
