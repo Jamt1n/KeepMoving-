@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body></body>
+  <script>
+    // proxy
+    let zhangsan = {
+      sellHouse(num) {
+        console.log("卖了" + num + "万");
+      },
+    };
+    zhangsan.sellHouse(100); // 张三自己卖不好卖，找个中介
+
+    // 中介代理模式
+    let proxySeller = {
+      sellHouse(hasSold, num) {
+        if (hasSold) {
+          zhangsan.sellHouse(num - 2); // 中介卖掉了，抽佣
+        } else {
+          zhangsan.sellHouse(num);
+        }
+      },
+    };
+
+    proxySeller.sellHouse(true, 100);
+
+    // proxy 服务器代理 转发请求
+    // Proxy =》 ES6代理对象
+
+    // 创建图片
+    class CreateImage {
+      constructor() {
+        this.img = document.createElement("img");
+        document.body.appendChild(this.img);
+      }
+      setSrc(src) {
+        this.img.src = src;
+      }
+    }
+    // let img = new CreateImage();
+    let src =
+      "http://5b0988e595225.cdn.sohucs.com/images/20190803/9abeac7da46c421cb4308eb8e4e25ea3.jpeg";
+    // img.setSrc(src); // 开始有加载事件，需要给个占位符loading
+    function proxyImg(src) {
+      let myImg = new CreateImage();
+      let loadImg = new Image();
+      myImg.setSrc("./loading.gif");
+      loadImg.src = src;
+      loadImg.onload = function () {
+        myImg.setSrc(src)
+      }
+    }
+    proxyImg(src);
+  </script>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body>
+    <div class="box">111</div>
+  </body>
+  <script>
+    // document.querySelector(".box").addEventListener("click", function () {
+    //   console.log("click1")
+    // })
+    // document.querySelector(".box").addEventListener("click", function () {
+    //   console.log("click2")
+    // })
+
+    let obj1 = {
+      fn1() {
+        console.log("fn1更新");
+      },
+    };
+    let obj2 = {
+      fn2() {
+        console.log("fn2更新");
+      },
+    };
+
+    // 管理事件类
+    class MyEvent {
+      constructor() {
+        this.handles = {};
+      }
+      addEvent(eventName, fn) {
+        // {myevent1:[fn1,fn2...], myevent2:[fn1,fn2...]}
+        if (typeof this.handles[eventName] === "undefined") {
+          this.handles[eventName] = [];
+        }
+        this.handles[eventName].push(fn);
+      }
+      trigger(eventName) {
+        if (!(eventName in this.handles)) {
+          return;
+        }
+        this.handles[eventName].forEach((fn) => {
+          fn();
+        });
+      }
+    }
+
+    let eventObj = new MyEvent();
+    eventObj.addEvent("myevent", obj1.fn1);
+    eventObj.addEvent("myevent", obj2.fn2);
+    setTimeout(() => {
+      eventObj.trigger("myevent");
+    }, 1000);
+  </script>
+</html>
