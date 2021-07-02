@@ -43,12 +43,14 @@ function renderHeroes(hreoes){
       document.querySelector(".heroShow").innerHTML = `<img src="${hero.ico}" />`;
       // 渲染英雄技能
       renderSkills(hero.skills);
+      // 渲染皮肤
+      renderSkin(hero)
     }
     document.querySelector(".heroView").appendChild(heroItem);
   })
 }
 
-// 渲染技能 
+// 渲染技能
 function renderSkills(skills){
   document.querySelector(".skillsView").innerHTML = "";
     skills.forEach(skill=>{
@@ -56,4 +58,11 @@ function renderSkills(skills){
       img.src = skill.ico;
       document.querySelector(".skillsView").appendChild(img);
     })
+}
+
+function renderSkin(hero) {
+    document.querySelector('.skinShow').innerHTML = "";
+    let img = document.createElement('img');
+    img.src = hero.skin;
+    document.querySelector('.skinShow').appendChild(img);
 }

@@ -1,16 +1,16 @@
-import S1 from '../skills/luban/s1.js';
-import S2 from '../skills/luban/s2.js';
-import S3 from '../skills/luban/s3.js';
-
-import Skin1 from "../skins/luban/skin1.js";
-import Skin2 from "../skins/luban/skin2.js";
-import Skin3 from "../skins/luban/skin3.js";
+import S1 from "../skills/luban/s1.js";
+import S2 from "../skills/luban/s2.js";
+import S3 from "../skills/luban/s3.js";
 
 export default class Luban {
-    constructor(){
-        this.name = "鲁班";
-        this.ico = "./sources/heroes/luban1.png";
-        this.skills = [new S1(),new S2(),new S3()];
-        this.skins = [new Skin1(),new Skin2(),new Skin3()];
-    }
+  constructor(myEvent) {
+    this.name = "鲁班";
+    this.ico = "./sources/heroes/luban1.png";
+    this.skin = "./sources/skins/301120.png"
+    this.skills = [new S1(), new S2(), new S3()];
+    myEvent.addEvent("init", this.init);
+  }
+  init() {
+    console.log("鲁班初始化");
+  }
 }

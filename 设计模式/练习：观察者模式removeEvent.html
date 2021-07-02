@@ -1,14 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="box">111</div>
+  </body>
+  <script>
+    // document.querySelector(".box").addEventListener("click",function(){
+    //     console.log("click1");
+    // })
+    // document.querySelector(".box").addEventListener("click",function(){
+    //     console.log("click2");
+    // })
 
+    let obj1 = {
+      fn1() {
+        console.log("fn1更新");
+      },
+    };
+    let obj2 = {
+      fn2() {
+        console.log("fn2更新");
+      },
+    };
 
-</body>
-<script>
+    // 管理事件类
+    class MyEvent {
+      constructor() {
+        this.handles = {};
+      }
+      addEvent(eventName, fn) {
+        // {myevent1:[fn1,fn2...],myevent2:[fn1,fn2...]}
+        if (typeof this.handles[eventName] === "undefined") {
+          this.handles[eventName] = [];
+        }
+        this.handles[eventName].push(fn);
+      }
+      trigger(eventName) {
+        if (!(eventName in this.handles)) {
+          return;
+        }
+        this.handles[eventName].forEach((fn) => {
+          fn();
+        });
+      }
+      removeEvent(eventName, fn) {
+        if (!(eventName in this.handles) || !eventName.length) {
+          return;
+        }
+        this.handles[eventName].forEach((f, i) => {
+          if (Object.is(f, fn)) {
+            this.handles[eventName].splice(i, 1);
+          }
+        });
+      }
+    }
 
-</script>
+    let eventObj = new MyEvent();
+    eventObj.addEvent("myevent", obj1.fn1);
+    eventObj.addEvent("myevent", obj2.fn2);
+    eventObj.removeEvent("myevent", obj2.fn2);
+
+    setTimeout(() => {
+      eventObj.trigger("myevent");
+      console.log(eventObj);
+    }, 1000);
+
+    // 作业：1.实现一个removeEvent 可以删除指定的指定以事件。2.通过自定义事件管理init方法，在登录时候延迟执行。
+  </script>
 </html>
