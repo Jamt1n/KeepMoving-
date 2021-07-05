@@ -6,7 +6,7 @@
     <script src="./myjq.js"></script>
   </head>
   <body>
-    <div class="box">111</div>
+    <div class="box" style="background: green">111</div>
     <div class="box">222</div>
   </body>
   <script>
@@ -36,13 +36,28 @@
     //  多情况--> 多中情况间的异同区分开, 判断 处理. 多个元素/事件: 循环绑定
 
     //  4、链式操作 return this，及返还实例化对象
-    $(".box")
-      .on("click", function () {
-        console.log("111");
-      })
+    $("div")
       .eq(0)
       .on("click", function () {
-        console.log(222);
+        console.log("链式");
       });
+    // 链式回滚 end
+    $("div")
+      .eq(0)
+      .eq(0)
+      .end()
+      .end()
+      .on("click", function () {
+        console.log("end");
+      });
+
+    //  5. css方法
+    // 传入对象
+    $("div").css({ width: "100xp", height: "100px", background: "red" });
+    // 参数
+    $("div").css("background","blue");
+    // 获取样式
+    console.log('获取的样式：', $("div").css("background"))
+
   </script>
 </html>
