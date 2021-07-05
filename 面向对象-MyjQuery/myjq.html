@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script src="./myjq.js"></script>
+  </head>
+  <body>
+    <div class="box">111</div>
+    <div class="box">222</div>
+  </body>
+  <script>
+    // document.querySelector('.box').onclick = function() {
+    //   console.log("click")
+    // }
+
+    // 1. 实现选择器  及click方法
+    $(".box").click(function () {
+      console.log("click");
+    });
+
+    // 2. 选择器多种处理
+    // 对象直接赋值
+    $(document.querySelector("div")).click(() => {
+      console.log(1111);
+    });
+    // DOMContentLoaded 比 window.onload早
+    $(function () {
+      console.log("加载完毕");
+    });
+
+    // 3. 多个元素 多个事件
+    $(".box").on("mouseover mousedown", function () {
+      console.log(123);
+    });
+    //  多情况--> 多中情况间的异同区分开, 判断 处理. 多个元素/事件: 循环绑定
+
+    //  4、链式操作 return this，及返还实例化对象
+    $(".box")
+      .on("click", function () {
+        console.log("111");
+      })
+      .eq(0)
+      .on("click", function () {
+        console.log(222);
+      });
+  </script>
+</html>
