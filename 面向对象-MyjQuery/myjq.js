@@ -6,6 +6,28 @@
 //     }
 // }
 
+// const config = {
+//   animationIterationCount: true,
+//   columnCount: true,
+//   fillOpacity: true,
+//   flexGrow: true,
+//   flexShrink: true,
+//   fontWeight: true,
+//   gridArea: true,
+//   gridColumn: true,
+//   gridColumnEnd: true,
+//   gridColumnStart: true,
+//   gridRow: true,
+//   gridRowEnd: true,
+//   gridRowStart: true,
+//   lineHeight: true,
+//   opacity: true,
+//   order: true,
+//   orphans: true,
+//   widows: true,
+//   zIndex: true,
+//   zoom: true,
+// };
 class Jq {
   constructor(arg, root) {
     if (typeof root === "undefined") {
@@ -81,12 +103,46 @@ class Jq {
     return this;
   }
   #getStyle(ele, styleName) {
+    if (styleName in $.cssHooks) {
+      return $.cssHooks[styleName].get(ele);
+    }
     return getComputedStyle(ele, null)[styleName];
   }
   #setStyle(ele, styleName, styleValue) {
+    if (typeof styleValue === "number" && !$.cssNumber[styleName]) {
+      styleValue += "px";
+    }
+    if (styleName in $.cssHooks) {
+      $.cssHooks[styleName].set(ele, styleValue);
+    }
     ele.style[styleName] = styleValue;
   }
 }
+
+$.cssNumber = {
+  animationIterationCount: true,
+  columnCount: true,
+  fillOpacity: true,
+  flexGrow: true,
+  flexShrink: true,
+  fontWeight: true,
+  gridArea: true,
+  gridColumn: true,
+  gridColumnEnd: true,
+  gridColumnStart: true,
+  gridRow: true,
+  gridRowEnd: true,
+  gridRowStart: true,
+  lineHeight: true,
+  opacity: true,
+  order: true,
+  orphans: true,
+  widows: true,
+  zIndex: true,
+  zoom: true,
+};
+
+$.cssHooks = {};
 
 function $(arg) {
   return new Jq(arg);

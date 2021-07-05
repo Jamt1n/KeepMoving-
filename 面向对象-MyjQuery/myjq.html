@@ -6,8 +6,9 @@
     <script src="./myjq.js"></script>
   </head>
   <body>
-    <div class="box" style="background: green">111</div>
-    <div class="box">222</div>
+    <div class="box" style="background: green; width: 100px">111</div>
+    <!--    <div class="box">222</div>-->
+    <button>button</button>
   </body>
   <script>
     // document.querySelector('.box').onclick = function() {
@@ -55,9 +56,42 @@
     // 传入对象
     $("div").css({ width: "100xp", height: "100px", background: "red" });
     // 参数
-    $("div").css("background","blue");
+    $("div").css("background", "blue");
     // 获取样式
-    console.log('获取的样式：', $("div").css("background"))
+    console.log("获取的样式：", $("div").css("background"));
 
+    // 6.提高扩展性 wh: "px"
+    // $.cssNumber.wh = true;
+    $("div").css({
+      width: 100,
+      height: "100px",
+      background: "red",
+      opacity: 0.3,
+    });
+    $.cssHooks.wh = {
+      get(ele) {
+        console.log("get", ele);
+        return (
+          getComputedStyle(ele, null)["width"] +
+          "-" +
+          getComputedStyle(ele, null)["height"]
+        );
+      },
+      set(ele, styleValue) {
+        console.log("set", ele, styleValue);
+        ele.style["width"] = styleValue;
+        ele.style["height"] = styleValue;
+      },
+    };
+    // $("div").css("wh", "300px");
+    console.log($("div").css("wh"));
+
+    // 7. 实现一个animate方法
+    $("button").on("click", function () {
+      $(".box").animate({ width: "600px" }, function () {
+        //"2000\slow\fast"
+        console.log("运动完成");
+      });
+    });
   </script>
 </html>
