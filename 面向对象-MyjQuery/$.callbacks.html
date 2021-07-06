@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jQuery.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+    let cb = $.Callbacks();
+    function fn1() {
+        console.log("fn1", arguments)
+    }
+    function fn2() {
+        console.log("fn2", arguments)
+    }
+    cb.add(fn1);
+    cb.add(fn2);
+
+    setTimeout(()=> {
+        cb.fire();
+    }, 1000)
+
+    cb.fire({}, [1,2,3])
+</script>
+</html>

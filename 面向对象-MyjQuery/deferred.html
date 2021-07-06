@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script src="jQuery.js"></script>
+  </head>
+  <body></body>
+  <script>
+    function fn1() {
+      let def = $.Deferred();
+      setTimeout(() => {
+        console.log("setTimeout");
+        let ran = parseInt(Math.random()*10);
+        if (ran>5) {
+          def.resolve("success")
+        }else {
+          def.reject("err")
+        }
+        // cb && cb();
+      }, 1000);
+      return def
+    }
+    // fn1(function () {
+    //   console.log("end")
+    // })
+    // fn1().then(res=> {
+    //   console.log(res)
+    // }, err=> {
+    //   console.log(err)
+    // });
+    fn1().done(res => {
+      console.log(res)
+    }).fail(res=> {
+      console.log(res)
+    })
+  </script>
+</html>
