@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <style>
+      .box {
+        height: 100px;
+        width: 100px;
+        background-color: red;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+  </body>
+  <script>
+    // function test(cb) {
+    //   console.log(111);
+    //   cb && cb();
+    // }
+    // test(function () {
+    //   test(function () {
+    //     test(function () {
+    //       console.log("执行完成了");
+    //     });
+    //   });
+    // });
+    function move(ele, dir, target, cb) {
+      let start = parseInt(getComputedStyle(ele, null)[dir]);
+      // console.log(start);
+      let speed = 5 * target > start ? 1 : -1;
+      setTimeout(() => {
+        start += speed;
+        if (start === target) {
+          // console.log('运动完成')
+          cb && cb();
+        } else {
+          ele.style[dir] = start + "px";
+          move(ele, dir, target, cb);
+        }
+      }, 10);
+    }
+    let ele = document.querySelector(".box");
+    move(ele, "left", 300, function () {
+      move(ele, "top", 300, function () {
+        move(ele, "left", 0, function () {
+          move(ele, "top", 0, function () {
+            console.log("运动完成");
+          });
+        });
+      });
+    });
+  </script>
+</html>
