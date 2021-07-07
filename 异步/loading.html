@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body>
+    <canvas></canvas>
+  </body>
+  <script>
+    // let img = new Image();
+    // img.src =
+    //   "https://img2.baidu.com/it/u=1155164861,2966785320&fm=11&fmt=auto&gp=0.jpg";
+    let canvas = document.querySelector("canvas");
+    let context = canvas.getContext("2d");
+    // img.onload = function () {
+    //   context.drawImage(img, 0, 0);
+    // }
+
+    function loadImg() {
+      return new Promise((resolve, reject) => {
+        let img = new Image();
+        img.src =
+          "https://img2.baidu.com/it/u=1155164861,2966785320&fm=11&fmt=auto&gp=0.jpg";
+        img.onload = function () {
+          resolve(img);
+        };
+        img.onerror = function () {
+          reject("图片加载失败");
+        };
+      });
+    }
+    loadImg()
+      .then((img) => {
+        context.drawImage(img, 0, 0);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  </script>
+</html>
