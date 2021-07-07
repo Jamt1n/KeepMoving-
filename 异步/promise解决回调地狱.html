@@ -59,19 +59,28 @@
       });
     }
     let ele = document.querySelector(".box");
-    move(ele, "left", 300)
-      .then((res) => {
-        // console.log("运动完成");
-        return move(ele, "top", 300);
-      })
-      .then((res) => {
-        return move(ele, "left", 0);
-      })
-      .then((res) => {
-        return move(ele, "top", 0);
-      })
-      .then((res) => {
-        console.log(res);
-      });
+    // move(ele, "left", 300)
+    //   .then((res) => {
+    //     // console.log("运动完成");
+    //     return move(ele, "top", 300);
+    //   })
+    //   .then((res) => {
+    //     return move(ele, "left", 0);
+    //   })
+    //   .then((res) => {
+    //     return move(ele, "top", 0);
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   });
+    async function fn() {
+      await move(ele, "left", 300);
+      await move(ele, "top", 300);
+      await move(ele, "left", 0);
+      let res = await move(ele, "top", 0);
+      console.log(res);
+      // console.log("运动完成");
+    }
+    fn();
   </script>
 </html>
