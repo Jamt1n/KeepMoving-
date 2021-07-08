@@ -1,10 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
-</head>
-<body>
+  </head>
+  <body></body>
+  <script type="module">
+    import MyPromise from "./mypromise.js";
 
-</body>
+    // 1、三种状态
+    let p = new MyPromise((resolve, reject) => {
+      // resolve("success")
+      // reject("err")
+      setTimeout(() => {
+        resolve("success");
+      }, 1000);
+    });
+    console.log(p);
+
+    // 2、then的问题
+    p.then(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+
+    // 3、多个then问题 =》通过数组多次执行
+    p.then((res) => {
+      console.log(111);
+    });
+    p.then((res) => {
+      console.log(222);
+    });
+
+    // 4、执行顺序问题（微任务宏任务）
+    setTimeout(() => {
+      console.log(111);
+    });
+    console.log(222);
+    let np = new MyPromise((resolve, reject) => {
+      console.log(333);
+      resolve("success")
+      // reject("err");
+    });
+    // 先调用resolve 再调用then
+    np.then(
+      (res) => {
+        console.log(444, res);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    console.log(555); // 222 333 555 444 111(原promise)
+  </script>
 </html>
