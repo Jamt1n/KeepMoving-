@@ -20,7 +20,12 @@ export default class MyPromise {
       }
     };
     // run();
-    setTimeout(run);
+    // setTimeout(run);
+    const observer = new MutationObserver(run);
+    observer.observe(document.body, {
+      attributes: true,
+    });
+    document.body.setAttribute("kkb", "value");
   }
   #reject(err) {
     this["[[PromiseState]]"] = "rejected";
@@ -34,7 +39,12 @@ export default class MyPromise {
       }
     };
     // run();
-    setTimeout(run);
+    // setTimeout(run);
+    const observer = new MutationObserver(run);
+    observer.observe(document.body, {
+      attributes: true,
+    });
+    document.body.setAttribute("kkb", "value");
   }
 
   then(onResolved, onRejected) {
