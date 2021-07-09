@@ -56,5 +56,23 @@
       }
     );
     console.log(555); // 222 333 555 444 111(原promise)
+
+
+    let myp = MyPromise.resolve("success")
+    console.log("myp", myp)
+
+    // 作业
+    let p1 = new Promise((resolve, reject) => {
+      resolve('p1')
+    })
+    let p2 = new Promise((resolve, reject) => {
+      resolve('p2')
+    })
+    MyPromise.all([p1,p2]).then(res=>{
+      console.log(res);
+    })
+    p1.finally(function () {
+      console.log('finally')
+    })
   </script>
 </html>
