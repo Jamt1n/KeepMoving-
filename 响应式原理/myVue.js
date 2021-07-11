@@ -23,8 +23,12 @@ class myVue extends EventTarget{
           node.textContent = node.textContent.replace(reg, this._data[$1]);
 
           // 事件监听
-          this.addEventListener($1, ()=> {
-            console.log("视图更新")
+          this.addEventListener($1, (e)=> {
+            console.log("视图更新");
+            let oldValue = this._data[$1];
+            let newValue = e.detail;
+            node.textContent = node.textContent.replace(oldValue, newValue);
+
           })
         }
       }
@@ -32,6 +36,7 @@ class myVue extends EventTarget{
   }
   observe(data) {
     let keys = Object.keys(data);
+    let _this = this;
     keys.forEach((key) => {
       let value = data[key];
       Object.defineProperty(data, key, {
@@ -42,7 +47,9 @@ class myVue extends EventTarget{
           return value;
         },
         set(newValue) {
-          this.dispatchEvent(new CustomEvent(key));
+          _this.dispatchEvent(new CustomEvent(key, {
+            detail: newValue
+          }));
           // 更新视图
           value = newValue;
           console.log("set");
