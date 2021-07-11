@@ -1,4 +1,4 @@
-class myVue extends EventTarget{
+class myVue extends EventTarget {
   constructor(options) {
     super();
     this.$options = options;
@@ -8,10 +8,16 @@ class myVue extends EventTarget{
   }
   compile() {
     let ele = document.querySelector(this.$options.el);
+    this.compileNodes(ele);
+  }
+  compileNodes(ele) {
     let childNodes = ele.childNodes;
     childNodes.forEach((node) => {
       if (node.nodeType === 1) {
-        // 标签
+        // 元素节点
+        if (node.childNodes.length > 0) {
+          this.compileNodes(node);
+        }
       } else if (node.nodeType === 3) {
         // 文本
         let reg = /\{\{\s*([^{}\s]+)\s*\}\}/g;
@@ -23,13 +29,12 @@ class myVue extends EventTarget{
           node.textContent = node.textContent.replace(reg, this._data[$1]);
 
           // 事件监听
-          this.addEventListener($1, (e)=> {
+          this.addEventListener($1, (e) => {
             console.log("视图更新");
             let oldValue = this._data[$1];
             let newValue = e.detail;
             node.textContent = node.textContent.replace(oldValue, newValue);
-
-          })
+          });
         }
       }
     });
@@ -47,13 +52,14 @@ class myVue extends EventTarget{
           return value;
         },
         set(newValue) {
-          _this.dispatchEvent(new CustomEvent(key, {
-            detail: newValue
-          }));
+          _this.dispatchEvent(
+            new CustomEvent(key, {
+              detail: newValue,
+            })
+          );
           // 更新视图
           value = newValue;
           console.log("set");
-
         },
       });
     });
