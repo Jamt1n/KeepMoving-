@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
-  <script src="./myVue.js"></script>
-</head>
-<body>
-  <div id="app">
-    {{message}}
-  </div>
-</body>
-<script>
-  let vm = new myVue({
-    el: "#app",
-    data: {
-      message: "数据"
-    }
-  })
+    <script src="./myVue.js"></script>
+  </head>
+  <body>
+    <div id="app">{{message}}</div>
+  </body>
+  <script>
+    // 一、初次渲染
+    //  二、响应式：1.数据被修改（数据观察、数据劫持）2.视图更新（观察者模式）
 
-  setTimeout(()=> {
-      vm._data.message = '修改的值'
-  },1000)
-</script>
+    let vm = new myVue({
+      el: "#app",
+      data: {
+        message: "数据",
+      },
+    });
 
+    setTimeout(() => {
+      vm._data.message = "修改的值";
+    }, 1000);
+  </script>
 </html>
