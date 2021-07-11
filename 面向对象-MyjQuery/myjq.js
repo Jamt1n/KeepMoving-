@@ -117,30 +117,60 @@ class Jq {
     }
     ele.style[styleName] = styleValue;
   }
+  // animate(...args) {
+  //   if (args.length === 3) {
+  //     for (let i = 0; i < this.length; i++) {
+  //       if (typeof args[1] === "number") {
+  //           args[0] = {...args[0], transition: `${Object.keys(args[0]).length == 1 ? Object.keys(args[0])[0] : "all"} ${args[1] / 1000}s`,
+  //         }; // 如果只有一个width就对width做transition ，太难看了下面的就不换了
+  //         this.eq(i).css(args[0]);
+  //         setTimeout(args[2], args[1]);
+  //       } else if (args[1] == "slow") {
+  //         args[0] = { ...args[0], transition: `all 4s` }; // slow默认4s
+  //         this.eq(i).css(args[0]);
+  //         setTimeout(args[2], 4000);
+  //       } else if (args[1] == "fast") {
+  //         args[0] = { ...args[0], transition: `all .5s` }; // fast默认0.5s
+  //         this.eq(i).css(args[0]);
+  //         setTimeout(args[2], 500);
+  //       }
+  //     }
+  //   } else if (args.length === 2) {
+  //     for (let i = 0; i < this.length; i++) {
+  //       args[0] = { ...args[0], transition: `all 2s` }; // 默认2s
+  //       this.eq(i).css(args[0]);
+  //       setTimeout(args[1], 2000);
+  //     }
+  //   }
+  // }
   animate(...args) {
-    if (args.length === 3) {
-      for (let i = 0; i < this.length; i++) {
-        if (typeof args[1] === "number") {
-            args[0] = {...args[0], transition: `${Object.keys(args[0]).length == 1 ? Object.keys(args[0])[0] : "all"} ${args[1] / 1000}s`,
-          }; // 如果只有一个width就对width做transition ，太难看了下面的就不换了
-          this.eq(i).css(args[0]);
-          setTimeout(args[2], args[1]);
-        } else if (args[1] == "slow") {
-          args[0] = { ...args[0], transition: `all 4s` }; // slow默认4s
-          this.eq(i).css(args[0]);
-          setTimeout(args[2], 4000);
-        } else if (args[1] == "fast") {
-          args[0] = { ...args[0], transition: `all .5s` }; // fast默认0.5s
-          this.eq(i).css(args[0]);
-          setTimeout(args[2], 500);
+    let timer = 500;
+    if (typeof args[1] !== "function") {
+      if (typeof args[1] === "string") {
+        switch (args[1]) {
+          case "slow":
+            timer = 1000;
+            break;
+          case "fase":
+            timer = 200;
+            break;
+          case "nomal":
+            timer = 600;
+            break;
         }
+      } else if (typeof args[1] === "number") {
+        timer = args[1];
       }
-    } else if (args.length === 2) {
-      for (let i = 0; i < this.length; i++) {
-        args[0] = { ...args[0], transition: `all 2s` }; // 默认2s
-        this.eq(i).css(args[0]);
-        setTimeout(args[1], 2000);
+    }
+    let timeSecond = timer / 1000 + "s";
+    for (let i = 0; i < this.length; i++) {
+      this[i].style.transition = timeSecond + " all";
+      for (let j in args[0]) {
+        this.#setStyle(this[i], j, args[0][j]);
       }
+    }
+    if (typeof args[args.length - 1] === "function") {
+      document.addEventListener("transitionend", args[args.length - 1]);
     }
   }
 }
