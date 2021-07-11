@@ -6,7 +6,11 @@
     <script src="./myVue3.js"></script>
   </head>
   <body>
-    <div id="app">{{message}}</div>
+    <div id="app">
+<!--      {{message}}-->
+      <input type="text" v-model="message" /> {{message}}
+      <div v-text="message"></div>
+    </div>
   </body>
   <script>
     // 一、初次渲染
@@ -20,7 +24,7 @@
     });
 
     setTimeout(() => {
-      vm._data.message = "修改的值";
+      vm._data.message = "123";
     }, 1000);
   </script>
 </html>

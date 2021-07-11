@@ -16,6 +16,21 @@ class myVue {
     let childNodes = ele.childNodes;
     childNodes.forEach((node) => {
       if (node.nodeType === 1) {
+        // 属性 指令处理
+        let attrs = node.attributes;
+        [...attrs].forEach((attr) => {
+          let attrName = attr.name;
+          let attrValue = attr.value;
+          if (attrName === "v-model") {
+            node.value = this._data[attrValue];
+            node.addEventListener("input", (e) => {
+              let newValue = e.target.value;
+              console.log(e.target.value)
+              this._data[attrValue] = newValue;
+            });
+          }
+        });
+
         // 元素节点
         if (node.childNodes.length > 0) {
           this.compileNodes(node);
@@ -87,7 +102,7 @@ class Watcher {
     Dep.target = this;
     data[key]; // 触发get 收集watcher
     this.cb = cb;
-    Dep.target = null;
+    // Dep.target = null;
   }
   update(newValue) {
     this.cb(newValue);
