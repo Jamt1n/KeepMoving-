@@ -65,7 +65,7 @@ Object.defineProperty(obj,'name',{
 - 通过defineProperty劫持数据:observer
 
 
-##发布订阅监听数据的更新
+## 发布订阅监听数据的更新
 
 - 通过自定义事件触发更新
 - 通过发布订阅模式触发更新
