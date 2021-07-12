@@ -37,10 +37,10 @@ class myVue {
               node.innerHTML = newValue;
             });
           } else if (attrName === "v-text") {
-            node.innerText = this._data[attrValue];
+            node.textContent = this._data[attrValue];
             new Watcher(this._data, attrValue, (newValue) => {
               console.log("视图更新");
-              node.innerText = newValue;
+              node.textContent = newValue;
             });
           }
         });
