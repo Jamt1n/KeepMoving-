@@ -21,12 +21,26 @@ class myVue {
         [...attrs].forEach((attr) => {
           let attrName = attr.name;
           let attrValue = attr.value;
+          console.log(attrName, attrValue);
           if (attrName === "v-model") {
             node.value = this._data[attrValue];
             node.addEventListener("input", (e) => {
               let newValue = e.target.value;
-              console.log(e.target.value)
+              console.log(e.target.value);
               this._data[attrValue] = newValue;
+            });
+          } else if (attrName === "v-html") {
+            console.log(this._data)
+            node.innerHTML = this._data[attrValue];
+            new Watcher(this._data, attrValue, (newValue) => {
+              console.log("视图更新");
+              node.innerHTML = newValue;
+            });
+          } else if (attrName === "v-text") {
+            node.innerText = this._data[attrValue];
+            new Watcher(this._data, attrValue, (newValue) => {
+              console.log("视图更新");
+              node.innerText = newValue;
             });
           }
         });

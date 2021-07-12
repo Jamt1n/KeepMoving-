@@ -7,9 +7,10 @@
   </head>
   <body>
     <div id="app">
-<!--      {{message}}-->
+      {{message}}
       <input type="text" v-model="message" /> {{message}}
-      <div v-text="message"></div>
+      <div v-html="message"></div>
+        <button onclick="console.log(vm._data)">检测_data</button>
     </div>
   </body>
   <script>
@@ -19,12 +20,12 @@
     let vm = new myVue({
       el: "#app",
       data: {
-        message: "数据",
+        message: "<h1>123</h1>",
       },
     });
 
     setTimeout(() => {
-      vm._data.message = "123";
+      vm._data.message = "<h1>修改了</h1>";
     }, 1000);
   </script>
 </html>
