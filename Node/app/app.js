@@ -20,20 +20,52 @@ const server = http.createServer();
 // 注册 request 事件回调函数，当有客户端连接请求被监听到的时候执行回调
 server.on('request', (req, res) => {
 
-    // 获取请求相关信息
-    // 当前请求的 url 字符串
-    console.log(req.url);
-
     // 使用 Node.js 的 url 模块中提供的工具方法解析 url 字符串
     const urlObj = url.parse(req.url);
     console.log(urlObj);
 
-    try {
-        let content = fs.readFileSync(`./resources${urlObj.pathname}`).toString();
-        res.end(content);
-    } catch (e) {
-        res.end(Math.random()+'');
+    // 自定义一套基于url的规则来区分当前的静态资源与动态资源
+    // /static/1.html
+    if (urlObj.pathname.startsWith('/static')) {
+        // 静态资源
+        try {
+
+            // 获取当前文件的后缀
+            // /static/1.html
+            let lastPointIndexOf = urlObj.pathname.lastIndexOf('.');
+            let suffix = urlObj.pathname.substring(lastPointIndexOf);
+            console.log('suffix', suffix);
+
+            let content = fs.readFileSync(`.${urlObj.pathname}`);
+
+            // 设置响应头
+            // {'.html': 'text/html;charset=utf-8'}
+            switch (suffix) {
+                case '.html':
+                    res.setHeader('Content-Type', 'text/html;charset=utf-8');
+                    break;
+                case '.css':
+                    res.setHeader('Content-Type', 'text/css;charset=utf-8');
+                    break;
+                case '.png':
+                    res.setHeader('Content-Type', 'image/png');
+                    break;
+                default:
+                    res.setHeader('Content-Type', 'text/plain');
+                    break;
+            }
+
+            res.end(content);
+        } catch (e) {
+            res.end(Math.random()+'');
+        }
+    } else {
+        if (urlObj.pathname == '/now') {
+            res.end(Date.now().toString());
+        }
     }
+
+
 });
 
 // 指定当前 Server 需要监听的主机
