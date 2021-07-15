@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body></body>
+  <script>
+    // 编程范式  ： 面向过程  面向对象
+    // 是一种强调以函数使用为主的软件开发风格 ，也是一种范式。
+    // 多范式语言 函数一等公民
+    // 一、纯函数:纯函数是对给定的输入返还相同输出的函数.
+    // f(x) = y;  1->2  2->4 3->6...
+
+    // 不是纯函数
+    // let factor = 3;
+    // const y = function (x){
+    //     return x * factor ;
+    // }
+    // console.log(y(2));
+    // const y = function (x){
+    //     let factor = 2;
+    //     return x * factor ;
+    // }
+
+    // 意义：复用性  可推测性 组合成复杂功能
+
+    // test("double(2) 等于 4" ,()=>{
+    //     expect(double(2)).toBe(4);
+    // })
+
+    // 高阶函数：以函数作为输入或者输出的函数被称为高阶函数(Higher-Order Function)
+
+    // function test(cb){
+    //     cb && cb();
+    // }
+    // test(function(){
+    //     console.log("test");
+    // })
+
+    // function test(){
+    //     return function(){
+    //         console.log("test");
+    //     }
+    // }
+    // test()();
+
+    // 意义；抽象
+    // 命令式 强调“如何做”    声明式编程 ： “做什么”
+    // let arr = [1,2,3];
+    // for(let i=0;i<arr.length;i++){
+    //     console.log(arr[i]);
+    // }
+
+    // 声明式
+    // const forEach = function(arr,fn){
+    //     for(let i=0;i<arr.length;i++){
+    //       fn && fn(arr[i]);
+    //     }
+    // }
+
+    // forEach(arr,function(item){
+    //     console.log(item);
+    // });
+
+    // let arr = [true,false,true];
+
+    // const every = function(arr,fn){
+    //     let result = true;
+    //     for(let i=0;i<arr.length;i++){
+    //         result = result && fn(arr[i]);
+    //     }
+    //     return result;
+    // }
+
+    // let res =  every(arr,item=>item);
+    // console.log(res);
+
+    // 缓存特性
+    // const once  = function(fn){
+    //     let done = false;
+    //     return function(){
+    //         if(!done){
+    //             fn();
+    //             done = true;
+    //         }else{
+    //             console.log("已经执行过了");
+    //         }
+    //     }
+    // }
+
+    // function test(){
+    //     console.log("test函数");
+    // }
+    // let myFn = once(test);
+
+    // myFn();
+    // myFn();
+
+    // function memorize(fn){
+    //     let cache = [];
+    //     return function(){
+    //         cache.push(fn(...arguments));
+    //         return cache;
+    //     }
+    // }
+
+    // const sum = function(a,b){
+    //     return a + b;
+    // }
+
+    // let mySum = memorize(sum);
+    // console.log( mySum(1,2));
+    // console.log( mySum(2,2));
+    // console.log( mySum(3,2));
+
+    // 柯里化  curry  : 把一个多参数函数转化成一个嵌套的一元函数的过程
+
+    // function add(x,y,z,o){
+    //     return x+y+z+o;
+    // }
+    // add(1,2,3);
+    // add(1)(2)(3);
+
+    //柯里化
+    // const curry = function(fn){
+    //     return function(x){
+    //         return function(y){
+    //             return function(z){
+    //                 return fn(x,y,z);
+    //             }
+    //         }
+    //     }
+    // }
+    // 通用柯里化
+    // x ---> x,y --->x,y,z ....
+    const curry = function (fn) {
+        return function curryFn(...args) {
+            if (args.length < fn.length) {
+                return function () {
+                    return curryFn(...args, ...arguments);
+                }
+            } else {
+                return fn(...args);
+            }
+        }
+    }
+
+    // let myAdd = curry(add);
+    // console.log(myAdd(1)(2)(3)(4));
+
+    // 意义；
+    // 参数复用
+    // let str1 = "abcfdsafd";
+    // let str2 = "fdsaljllj";
+
+    // function addPre(pre,str){
+    //     return pre + "-" + str;
+    // }
+    // let pre = "AA";
+    // // console.log(addPre(pre,str1));
+    // // console.log(addPre(pre,str2));
+
+    // // 参数复用
+    // let addPreFn = curry(addPre)(pre);
+    // console.log(addPreFn(str1));
+    // console.log(addPreFn(str2));
+
+    // 延迟执行；
+    // function getAjax(url,method){
+    //     let xhr;
+    //     if(XMLHttpRequest){
+    //         xhr = new XMLHttpRequest();
+    //     }else{
+    //         xhr = new ActiveXObject();
+    //     }
+    //     return xhr;
+    // }
+
+    // function getAjax(url,method){
+    //     if(XMLHttpRequest){
+    //         return function(){
+    //             return new XMLHttpRequest();
+    //         }
+    //     }else{
+    //         return function(){
+    //             return new ActiveXObject();
+    //         }
+    //     }
+    // }
+
+    // let myGetAjax = curry(getAjax)("api/users");
+    // let xhr =  myGetAjax("get");
+    // console.log(xhr());
+
+    // bind(this)(1)(2)....
+
+    // 组合及管道  compose  pipe
+
+    // function aFn(num) {
+    //     return num + 2;
+    // }
+
+    // function bFn(num) {
+    //     return 2 * num;
+    // }
+
+    // 基于值来计算
+    // console.log( bFn(aFn(5)));
+    // 无值编程 （合成运算过程）;
+    // pointFree风格：无值编程  合成运算过程  。
+
+    // 组合：从右至左执行的；
+    // 管道：从左至右执行的；
+    // const compose = function(bFn,aFn){
+    //     return function(num){
+    //         return bFn(aFn(num));
+    //     }
+    // }
+
+    // const compose = function(...fns){
+    //     return function(arg){
+    //        return  fns.reverse().reduce((acc,fn)=>{
+    //            return fn(acc);
+    //        },arg)
+    //     }
+    // }
+
+    // 组合
+    // const compose = (...fns)=>arg=>fns.reverse().reduce((acc,fn)=>fn(acc),arg);
+
+    // 管道
+    // const pipe = (...fns)=>arg=>fns.reduce((acc,fn)=>fn(acc),arg);
+
+    // let myFn = compose(bFn,aFn);
+    // let res =  myFn(5);
+    // console.log(res);
+
+    // const str = "大家好，我是中国人。我爱中国。我们同住地球村。";
+
+    // // function formatStr(str){
+    // //     let res = str.match(/。/g);
+    // //     return res.length%2===0?'偶数':'奇数';
+    // // }
+    // // 获取句号
+    // const getPeriod = str=>str.match(/。/g);
+    // // 获取长度
+    // const getLength = str=>str.length;
+    // // 判断奇偶
+    // const oddOrEven = num=>num%2===0?'偶数':'奇数';
+
+    // const formatStr = compose(oddOrEven,getLength,getPeriod);
+
+    // console.log(formatStr(str));
+
+    // forEach map  filter some every reduce ....
+
+    // 作业：实现 myMap  和 myFilter
+
+    // let arr = [{
+    //     name:"张三",
+    //     age:20
+    // },{
+    //     name:"李四",
+    //     age:25
+    // },{
+    //     name:"王五",
+    //     age:28
+    // }]
+
+    // let res =  arr.map(item=>{
+    //   console.log(item);
+    //   return item;
+    // });
+    // console.log(res);
+    // let res = arr.filter(item=>item.age>25);
+    // console.log(res);
+  </script>
+</html>
