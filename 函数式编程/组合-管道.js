@@ -1,12 +1,12 @@
 // 组合及管道  compose  pipe
 
-// function aFn(num) {
-//     return num + 2;
-// }
+function aFn(num) {
+    return num + 2;
+}
 
-// function bFn(num) {
-//     return 2 * num;
-// }
+function bFn(num) {
+    return 2 * num;
+}
 
 // 基于值来计算
 // console.log( bFn(aFn(5)));
@@ -21,40 +21,40 @@
 //     }
 // }
 
-// const compose = function(...fns){
-//     return function(arg){
-//        return  fns.reverse().reduce((acc,fn)=>{
-//            return fn(acc);
-//        },arg)
-//     }
-// }
+const compose = function(...fns){
+    return function(arg){
+       return  fns.reverse().reduce((acc,fn)=>{
+           return fn(acc);
+       },arg)
+    }
+}
 
 // 组合
-// const compose = (...fns)=>arg=>fns.reverse().reduce((acc,fn)=>fn(acc),arg);
+const compose = (...fns)=>arg=>fns.reverse().reduce((acc,fn)=>fn(acc),arg);
 
 // 管道
-// const pipe = (...fns)=>arg=>fns.reduce((acc,fn)=>fn(acc),arg);
+const pipe = (...fns)=>arg=>fns.reduce((acc,fn)=>fn(acc),arg);
 
-// let myFn = compose(bFn,aFn);
+let myFn = compose(bFn,aFn);
 // let res =  myFn(5);
 // console.log(res);
 
-// const str = "大家好，我是中国人。我爱中国。我们同住地球村。";
+const str = "大家好，我是中国人。我爱中国。我们同住地球村。";
 
-// // function formatStr(str){
-// //     let res = str.match(/。/g);
-// //     return res.length%2===0?'偶数':'奇数';
-// // }
-// // 获取句号
-// const getPeriod = str=>str.match(/。/g);
-// // 获取长度
-// const getLength = str=>str.length;
-// // 判断奇偶
-// const oddOrEven = num=>num%2===0?'偶数':'奇数';
+// function formatStr(str){
+//     let res = str.match(/。/g);
+//     return res.length%2===0?'偶数':'奇数';
+// }
+// 获取句号
+const getPeriod = str=>str.match(/。/g);
+// 获取长度
+const getLength = str=>str.length;
+// 判断奇偶
+const oddOrEven = num=>num%2===0?'偶数':'奇数';
 
-// const formatStr = compose(oddOrEven,getLength,getPeriod);
+const formatStr = compose(oddOrEven,getLength,getPeriod);
 
-// console.log(formatStr(str));
+console.log(formatStr(str));
 
 // forEach map  filter some every reduce ....
 
