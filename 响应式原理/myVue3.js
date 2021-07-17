@@ -82,7 +82,9 @@ class myVue {
     this._data = new Proxy(data, {
       get(target, key) {
         console.log("get");
-        temp[key] = new Dep();
+        if (!temp[key]) {
+          temp[key] = new Dep();
+        }
         if (Dep.target) {
           temp[key].addSub(Dep.target);
         }
