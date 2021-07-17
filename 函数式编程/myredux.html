@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="numDiv"></div>
+    <button>点击</button>
+</body>
+<script type="module">
+import createStore from './createStore.js';
+
+
+function Counter(state={num:0},action){
+    switch(action.type){
+        case 'ADD':
+            return {num:state.num+2};
+            break;
+        case 'MINUS':
+            return {num:state.num-1}
+            break;
+        default:
+            return state;
+            break;
+    }
+}
+
+let store = createStore(Counter);
+console.log(store);
+let btn = document.querySelector("button");
+btn.onclick = function(){
+    store.dispatch({type:'ADD'})
+}
+
+store.subscribe(()=>{
+    renderDom();
+})
+
+function renderDom(){
+    let mydiv = document.querySelector(".numDiv");
+   let state =  store.getState();
+   mydiv.innerHTML = state.num;
+}
+
+
+
+
+</script>
+</html>
