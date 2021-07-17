@@ -1,27 +1,66 @@
-// require koa
 const Koa = require('koa');
+const koaStaticCache = require('koa-static-cache');
+const KoaRouter = require('@koa/router');
+const koaBody = require('koa-body');
+const nunjucks = require('nunjucks');
 
-// 初始化一个 koa 对象（Application）
+nunjucks.configure('templates', { autoescape: true, watch: true, noCache: true });
+
+let maxUserId = 2;
+let users = [
+    {id: 1, username: 'haizi'},
+    {id: 2, username: 'zMouse'}
+]
+
 const app = new Koa();
 
+app.use(koaStaticCache({
+    prefix: '/static',
+    dir: './public',
+    dynamic: true,
+    gzip: true
+}));
 
-// 注册中间件
-app.use((ctx) => {
-    console.log('中间件 - 1');
+// 动态资源
+let router = new KoaRouter();
 
-    ctx.body = '这是返回的内容1';
+router.get('/', async (ctx, next) => {
+    ctx.body = '首页';
 });
 
-app.use((ctx) => {
-    console.log('中间件 - 2');
+router.get('/users', async (ctx, next) => {
+    // let str = users.map(user => {
+    //     return `
+    //         <li>${user.username}</li>
+    //     `
+    // }).join('');
 
-    ctx.body = '这是返回的内容2';
+    // ctx.body =nunjucks.renderString(fs.readFileSync('./templates/users.html').toString(), {users});
+
+    ctx.body = nunjucks.render('users.html', {users});
 });
 
-// 使用 app 对象来创建一个 webserver
-/**
- * http.createServer((req, res) => {})
- *
- * (new Http.Server().on('request', (req, res) => {}))
- */
+router.get('/add', async (ctx, next) => {
+    // ctx.body = nunjucks.renderString(fs.readFileSync('./templates/add.html').toString(), {});
+    ctx.body = nunjucks.render('add.html', {});
+});
+
+
+// 默认情况下，koaBody 中间件会解析提交过来的正文数据，并把解析后的数据转成对象存储到 ctx.request.body 属性中
+router.post('/add', koaBody(), async (ctx, next) => {
+    // console.log(ctx.request.body);
+
+    let {username} = ctx.request.body;
+
+    users.push({
+        id: ++maxUserId,
+        username
+    });
+
+    ctx.body = '添加成功';
+});
+
+app.use(router.routes());
+
+
 app.listen(8888);
