@@ -30,7 +30,7 @@ const compose = function(...fns){
 }
 
 // 组合
-const compose = (...fns)=>arg=>fns.reverse().reduce((acc,fn)=>fn(acc),arg);
+// const compose = (...fns)=>arg=>fns.reverse().reduce((acc,fn)=>fn(acc),arg);
 
 // 管道
 const pipe = (...fns)=>arg=>fns.reduce((acc,fn)=>fn(acc),arg);
@@ -71,10 +71,38 @@ let arr = [{
     age:28
 }]
 
-let res =  arr.map(item=>{
-  console.log(item);
-  return item;
-});
-console.log(res);
-let res = arr.filter(item=>item.age>25);
-console.log(res);
+// let res =  arr.map(item=>{
+//   console.log(item);
+//   return item;
+// });
+
+// let res = arr.filter(item=>item.age>25);
+// console.log(res);
+
+Array.prototype._mymap = function (fn) {
+    let len = this.length
+    let arr = [];
+    for (let i = 0; i < len; i ++) {
+       arr.push(fn(this[i]))
+    }
+    return arr;
+}
+let mymap = arr._mymap(item => {
+    console.log(item)
+    return item
+})
+console.log(mymap);
+
+
+Array.prototype._myfilter = function (fn) {
+    let arr = [];
+    let len = this.length;
+    for (let i = 0; i < len; i++) {
+        if (fn(this[i])) {
+            arr.push(this[i])
+        }
+    }
+    return arr;
+}
+let myfilter = arr._myfilter(item=>item.age>25);
+console.log(myfilter);
