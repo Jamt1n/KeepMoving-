@@ -9,6 +9,15 @@
 //     })
 //     return res;
 // }
+Array.prototype.flat1 = function(){
+    let arr = this;
+    function inner(arr){
+        return arr.reduce(function(a,b){
+            return a.concat(Array.isArray(b) ? inner(b) : b)
+        },[])
+    }
+    return inner(arr)
+}
 
 Array.prototype._flat = function(n) {
     n = n === undefined ? 1 : n;
@@ -23,6 +32,7 @@ Array.prototype._flat = function(n) {
     }
     return newArr;
 }
+
 
 let arr = [1,3,2,[5,[4]]];
 console.log(arr._flat());
