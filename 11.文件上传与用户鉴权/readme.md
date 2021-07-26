@@ -382,10 +382,13 @@ server.listen(8888);
   
   - 上传后的文件是否保持原文件的后缀（扩展名），默认为 `false` 。
 - `hash` **{String}** If you want checksums calculated for incoming files, set this to either `'sha1'` or `'md5'`, default `false`
+  
   - 是否对上传的文件进行指纹校验，默认为 `false` 。
 - `multiples` **{Boolean}** Multiple file uploads or no, default `true`
+  
   - 是否支持上传多个文件，默认为 `true` 。
 - `onFileBegin` **{Function}** Special callback on file begin. The function is executed directly by formidable. It can be used to rename files before saving them to disk.
+  
   - 文件上传事件回调函数，可以利用该函数与返回值来改变上传后的文件名称（默认上传后的文件会使用 `hash` 来进行命名。
 
 > 参考：https://github.com/node-formidable/formidable
