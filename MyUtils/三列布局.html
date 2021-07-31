@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body{
+      min-width: 600px;
+    }
+    header {
+      height: 200px;
+      background-color: red;
+    }
+    footer {
+      height: 200px;
+      background-color: blue;
+    }
+    .container {
+      height: 400px;
+      background-color: #ccc;
+      overflow: hidden;
+    }
+    .left, .right, .content {
+      float: left;
+      padding-bottom: 1000px;
+      margin-bottom: -1000px;
+    }
+    .left, .right {
+      height: 400px;
+      width: 200px;
+      background-color: green;
+    }
+    .content {
+      height: 400px;
+      width: 100%;
+      background-color: yellow;
+    }
+    .clearfix::after, .clearfix::before {
+      display: table;
+      content: " ";
+      clear: both;
+    }
+    /* .left {
+      margin-left: -100%;
+      position: relative;
+      left: -200px;
+    }
+    .right {
+      margin-left: -200px;
+      position: relative;
+      right: -200px;
+    } */
+    .left {
+      margin-left: -100%;
+    }
+    .right {
+      margin-left: -200px;
+    }
+    .content .inner{
+      padding: 0 200px;
+    }
+  </style>
+</head>
+<body>
+  <header></header>
+  <div class="container clearfix">
+    <div class="content"><div class="inner">inner</div></div>
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>
+  <footer></footer>
+</body>
+</html>
