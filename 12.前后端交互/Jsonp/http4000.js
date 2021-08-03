@@ -11,10 +11,18 @@ router.get('/', (ctx, next) => {
 })
 
 router.get('/getAjax', (ctx, next) => {
-    ctx.body = {
-        name: 'jam4000',
-        age: 20
-    };
+    // console.log(ctx.query.name)
+    // ctx.body = {
+    //     name: 'jam4000',
+    //     age: 20
+    // };
+    // ctx.body = "var a = 20";
+    let obj = {
+        a: 1,
+        b: 2,
+    }
+    let cb = ctx.query.cb;
+    ctx.body = `${cb}(${JSON.stringify(obj)})`
 })
 
 app.use(router.routes());
