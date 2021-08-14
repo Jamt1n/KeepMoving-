@@ -7,7 +7,7 @@
 - 官⽅方⽹网站:https://webpack.js.org/
 - 中⽂文⽹网站:https://www.webpackjs.com/
 
-![image-20191014165344746](/Users/zhangyuxuan/Downloads/2021-01-08-webpack-02/课件/assets/webpack_description_2-8906168.jpg)
+![image-20191014165344746](./assets/webpack_description_2-8906168.jpg)
 
 本质上，`webpack` 是一个现代 `JavaScript` 应用程序的静态模块打包器(module bundler)。当 webpack 处理应用程序时，它会递归地构建一个依赖关系图(dependency graph)，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 bundle。
 
@@ -202,7 +202,7 @@ console.log(txt);
 
 ### 6 - 1、执行简要流程
 
-![workflow](/Users/zhangyuxuan/Downloads/2021-01-08-webpack-02/课件/assets/workflow.png)
+![workflow](./assets/workflow.png)
 
 - `loaders`：`webpack` 中灰常核心的内容之一，前面我们说的非 js 类型的模块处理就靠它了。webpack 可以使用 loader 来预处理文件。这允许你打包除 JavaScript 之外的任何静态资源。你可以使用 Node.js 来很简单地编写自己的 loader。
 - `plugins`：`webpack` 中另外一个核心的内容，它主要是扩展 `webpack` 本身的一些功能。插件可以运行在 `webpack` 的不同阶段（钩子 / 生命周期）。
