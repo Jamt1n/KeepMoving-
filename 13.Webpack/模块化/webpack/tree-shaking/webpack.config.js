@@ -1,7 +1,7 @@
 const { resolve } = require('path')
 
 module.exports = {
-	mode: 'production',
+	mode: 'production', // 切换代码环境
 	entry: './index.js',
 	output: {
 		path: resolve(__dirname, 'dist'),
