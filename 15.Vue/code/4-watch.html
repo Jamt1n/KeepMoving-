@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      {{count}}
+
+      <div>{{msg1}} {{msg2}}</div>
+      <div>{{user}}</div>
+      <button @click="handleClick">click</button>
+    </div>
+    <script>
+      // 1(观察一个) 对 多(更改多个值) 的关系
+      const app = new Vue({
+        el: "#app",
+        data: {
+          msg: "hello world",
+          count: 0,
+          msg1: "",
+          msg2: "",
+          user: {
+            age: 18,
+            name: "xiaohong",
+          },
+        },
+        methods: {
+          handleClick() {
+            this.count++;
+          },
+        },
+        watch: {
+          "user.age"() {
+            console.log("age change");
+          },
+          // user: {
+          //   handler(newVal, oldVal) {
+          //     console.log(newVal, oldVal);
+          //   },
+          //   deep: true
+          // },
+          count: {
+            handler(newVal, oldVal) {
+              console.log(newVal, oldVal);
+              // count -> fetch api
+              // count -> change 多个值
+              this.msg1 = "msg1 : " + this.count;
+              this.msg2 = "msg2 : " + this.count;
+            },
+            immediate: true, // 立刻执行
+          },
+
+          // count(newVal, oldVal) {
+          //   // watch 懒加载
+          //   console.log(newVal, oldVal);
+          //   // count -> fetch api
+          //   // count -> change 多个值
+          //   this.msg1 = "msg1 : " + this.count;
+          //   this.msg2 = "msg2 : " + this.count;
+          // },
+        },
+      });
+    </script>
+  </body>
+</html>
