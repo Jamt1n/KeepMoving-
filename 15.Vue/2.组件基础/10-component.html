@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="dynamic-component-demo" class="demo">
+      <button @click="changeComponent('Home')">Home</button>
+      <button @click="changeComponent('Post')">Post</button>
+      <button @click="changeComponent('Archive')">Archive</button>
+
+      <div>
+        <!-- <Home v-show="showComponent === 'Home'"></Home>
+        <Post v-show="showComponent === 'Post'"></Post>
+        <Archive v-show="showComponent === 'Archive'"></Archive> -->
+        <component :is="showComponent"></component>
+      </div>
+    </div>
+
+    <script>
+      // 1. 注册过的
+      // 2. options
+
+      Vue.component("Home", {
+        template: "<div></div>",
+      });
+      Vue.component("Post", {
+        template: "<div>post</div>",
+      });
+      Vue.component("Archive", {
+        template: "<div>Archive</div>",
+      });
+
+      const componentMap = {
+        Home: {
+          template: "<div>home</div>",
+        },
+        Post: {
+          template: "<div>post</div>",
+        },
+        Archive: {
+          template: "<div>archive</div>",
+        },
+      };
+
+      const app = new Vue({
+        el: "#dynamic-component-demo",
+        data: {
+          msg: "hello world",
+          showComponent: componentMap["Home"],
+          //   showComponent: "Home",
+          //   showComponent: {
+          //     template: "<div>home</div>",
+          //   },
+        },
+        methods: {
+          changeComponent(componentName) {
+            // this.showComponent = componentName;
+            this.showComponent = componentMap[componentName];
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

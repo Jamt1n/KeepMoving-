@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      {{msg}} {{count}}
+      <!-- <button @click="onClick">click</button> -->
+      <!-- <button @click="handleClick(1,$event)">click</button> -->
+      <button @click.once="count++">click</button>
+    </div>
+    <script>
+      // v-on 事件处理 -> @
+      const app = new Vue({
+        el: "#app",
+        data: {
+          count: 1,
+          msg: "hello world",
+        },
+        methods: {
+          onClick(e) {
+            console.log(e);
+          },
+          handleClick(type, e) {
+            console.log(e);
+            if (type === 1) {
+              console.log("click 1");
+            } else if (type === 2) {
+              console.log("click 2");
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

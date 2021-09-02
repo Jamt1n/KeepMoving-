@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>template</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      // js -> function
+      // function add(a=2,b){
+      // }
+      // ts -> type
+      const Foo = {
+        // props: ["title"],
+        props: {
+          title: {
+            type: String,
+            // required: true,
+            // default: "this is a foo",
+            // title a | b
+            // validator(val) {
+            //   console.log(val);
+            //   // button -> type -> small big
+            //   return val === "a";
+            // },
+          },
+        },
+        template: `<div>Foo {{title}}
+          
+          <button @click="handleChangeProps"> change props</button>
+          </div>`,
+        methods: {
+          handleChangeProps() {
+            console.log(this.title)
+            this.title = "n"
+          }
+        },
+      };
+
+      const app = new Vue({
+        el: "#app",
+        components: {
+          Foo,
+        },
+        template: `
+            <div>app
+              
+              <Foo title="a"></Foo>
+              
+              </div>
+        `,
+      });
+    </script>
+  </body>
+</html>

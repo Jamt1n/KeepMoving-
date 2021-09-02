@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- <Foo title="heihei"> 123 </Foo> -->
+      <Bar :level="3">h3</Bar>
+      <Bar :level="1">h1</Bar>
+    </div>
+
+    <script>
+      const Bar = {
+        props: ["level"],
+        render(createElement) {
+          const level = this.$props.level;
+
+          return createElement("div", [
+            createElement("h" + level, this.$slots.default),
+          ]);
+        },
+        // template: `
+        //         <div >
+        //             <h1 v-if="level === 1">
+        //                 <slot></slot>
+        //             </h1>
+
+        //             <h2 v-if="level === 2">
+        //                 <slot></slot>
+        //             </h2>
+
+        //             <h3 v-if="level === 3">
+        //                 <slot></slot>
+        //             </h3>
+
+        //             <h4 v-if="level === 4">
+        //                 <slot></slot>
+        //             </h4>
+
+        //             </div>
+
+        //     `,
+      };
+
+      // level 1 -> h1
+      // level 2 -> h2
+
+      // vue
+      // template -> compiler -> render
+      //   const Foo = {
+      //     // template: `<div id="foo">Foo</div>`,
+      //     props: ["title"],
+      //     render(createElement) {
+      //       // tag -> component
+      //       // props
+      //       // children -> string | array
+      //       //   console.log(createElement("div"));
+      //       //   console.log(this.$props.title)
+      //       //   console.log(this.$slots)
+
+      //       return createElement(
+      //         "div",
+      //         {
+      //           class: {
+      //             test: true,
+      //           },
+      //           style: {
+      //             color: "red",
+      //           },
+      //           attrs: {
+      //             id: "foo",
+      //           },
+      //           on: {
+      //             click() {
+      //               console.log("click");
+      //             },
+      //           },
+      //         },
+      //         this.$slots.default
+      //         // "foo - render"
+      //       );
+      //     },
+      //   };
+
+      const app = new Vue({
+        el: "#app",
+        components: {
+          //   Foo,
+          Bar,
+        },
+
+        data: {
+          msg: "hello world",
+        },
+      });
+    </script>
+  </body>
+</html>

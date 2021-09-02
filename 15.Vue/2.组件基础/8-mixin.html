@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>template</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      // mixin
+      // 1. 局部
+      const fooMixin = {
+        data() {
+          return {
+            value: "foo - mixin",
+          };
+        },
+        mounted() {
+          console.log("foo - mixin - mounted");
+        },
+        methods: {
+          getName() {
+            console.log("foo - getName - foo - mixin");
+          },
+
+          getMixinName() {
+            console.log("mixin name");
+          },
+        },
+      };
+
+      const Foo = {
+        mixins: [fooMixin],
+        data() {
+          return {
+            value: "foo - self",
+          };
+        },
+        mounted() {
+          console.log("foo - self");
+        },
+        methods: {
+          getName() {
+            console.log("foo - getName - foo -component");
+          },
+        },
+        template: `<div>Foo
+          
+          {{value}}
+          <button @click="getName">click</button>
+          <button @click="getMixinName">click mixin name</button>
+          
+          </div>`,
+      };
+      // 2. 全局
+      // 每一个组件
+      Vue.mixin({
+        mounted() {
+          console.log("global mixin");
+        },
+      });
+
+      const app = new Vue({
+        el: "#app",
+        components: {
+          Foo,
+        },
+        template: `
+            <div>app
+              <Foo></Foo>
+              </div>
+        `,
+      });
+    </script>
+  </body>
+</html>

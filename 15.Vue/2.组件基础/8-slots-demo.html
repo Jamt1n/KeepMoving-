@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>template</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      const Mousemove = {
+        template: `
+          <div><slot :x="x" :y="y"></slot></div>
+        `,
+        data() {
+          return {
+            x: 0,
+            y: 0,
+          };
+        },
+        methods: {
+          handleMousemove(e) {
+            this.x = e.pageX;
+            this.y = e.pageY;
+          },
+        },
+
+        mounted() {
+          window.addEventListener("mousemove", this.handleMousemove);
+        },
+
+        destroyed() {
+          window.removeEventListener("mousemove", this.handleMousemove);
+        },
+      };
+
+      const Foo = {
+        components: {
+          Mousemove,
+        },
+        template: `<div>
+          
+          foo - 
+          <Mousemove v-slot="{x: XX,y: YY}">
+            x:{{XX}} - y:{{YY}}
+          </Mousemove>
+         </div>`,
+      };
+
+      const app = new Vue({
+        el: "#app",
+        components: {
+          Foo,
+        },
+        template: `
+            <div>app
+              <Foo></Foo>
+              </div>
+        `,
+      });
+    </script>
+  </body>
+</html>

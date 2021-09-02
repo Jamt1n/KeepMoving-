@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>template</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      // v-if v-for
+
+      Vue.directive("focus", {
+        bind(el, binding) {
+          // 处理一些init 的逻
+        },
+        inserted(el, binding) {
+          console.log(el);
+          console.log(binding);
+          el.focus();
+        },
+      });
+
+      const Foo = {
+        template: `<div>
+          
+          <input v-focus.a.b="1+1">
+          
+          </div>`,
+      };
+
+      const app = new Vue({
+        el: "#app",
+        components: {
+          Foo,
+        },
+        template: `
+            <div>app
+              
+              <Foo></Foo>
+              
+              </div>
+        `,
+      });
+    </script>
+  </body>
+</html>

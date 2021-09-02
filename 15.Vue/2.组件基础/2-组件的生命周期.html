@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>template</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+    </div>
+    <script>
+      const Bar = {
+        template: `<div>Bar
+            <div></div>
+            </div>`,
+        beforeCreate() {
+          console.log("bar- before - create");
+        },
+        created() {
+          console.log("bar- created");
+          // fetch  api
+        },
+        beforeMount() {
+          console.log("bar- before-mount");
+        },
+        mounted() {
+          console.log("bar- mounted");
+          // 所以子组件都已经 mounted 了
+          //   window.addEventListener("")
+        },
+        beforeUpdate() {
+          console.log("bar- before -update");
+        },
+        updated() {
+          console.log("bar- updated");
+          // dom -> updated
+        },
+        beforeDestroy() {
+          console.log("bar- before-destroy");
+        },
+        destroyed() {
+          // window.removeEventListener
+          console.log("bar- destroyed");
+        },
+      };
+
+      const Foo = {
+        components: {
+          Bar,
+        },
+        data() {
+          return {
+            count: 0,
+          };
+        },
+        template: `<div>Foo
+            <Bar></Bar>
+            {{count}}
+            <button @click="count++">click</button>
+            
+            </div>`,
+        beforeCreate() {
+          console.log("before - create");
+        },
+        created() {
+          console.log("created");
+          // fetch  api
+        },
+        beforeMount() {
+          console.log("before-mount");
+        },
+        mounted() {
+          console.log("mounted");
+          //   window.addEventListener("")
+        },
+        beforeUpdate() {
+          console.log("before -update");
+        },
+        updated() {
+          console.log("updated");
+          // dom -> updated
+        },
+        beforeDestroy() {
+          console.log("before-destroy");
+        },
+        destroyed() {
+          // window.removeEventListener
+          console.log("destroyed");
+        },
+      };
+
+      const app = new Vue({
+        el: "#app",
+        components: {
+          Foo,
+        },
+        data: {
+          isFoo: true,
+        },
+        template: `
+            <div>app
+                <Foo v-if="isFoo"></Foo>
+            </div>
+        `,
+      });
+    </script>
+  </body>
+</html>

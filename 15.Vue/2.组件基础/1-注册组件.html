@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>template</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      // 注意点
+      // 1. 必须要有一个根元素
+      // 2. data 必须是一个function
+      // 局部注册
+      const Bar = {
+        // data: {
+        //   count: 0,
+        // },
+        data() {
+          return {
+            count: 0,
+          };
+        },
+        template: `<div>Bar
+            
+            {{count}}
+            <button @click="count++"></button>
+            
+            </div>`,
+        // template: `Bar`,
+      };
+
+      // 对象的话，是不是引用类型
+      // data.count
+
+      // 全局注册
+      Vue.component("Foo", {
+        components: {
+          Bar,
+        },
+
+        template: `<div>foo
+            <Bar></Bar>
+            <Bar></Bar>
+            </div>`,
+      });
+
+      const app = new Vue({
+        el: "#app",
+        template: `
+            <div>app
+                <Foo></Foo>
+                </div>
+        `,
+        data: {},
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="dynamic-component-demo" class="demo">
+      <button @click="changeComponent('Home')">Home</button>
+      <button @click="changeComponent('Post')">Post</button>
+      <button @click="changeComponent('Archive')">Archive</button>
+
+      <div>
+        <keep-alive exclude="Home">
+          <component :is="showComponent"></component>
+        </keep-alive>
+      </div>
+    </div>
+
+    <script>
+      // 生命周期
+      // activated
+      // deactivated
+
+      // include
+      // exclude
+
+
+      Vue.component("Home", {
+        template: `<div>
+          性别：<input type="radio" name="gender" v-model="checked"> 女 </input>
+          <input type="radio" name="gender" v-model="checked"> 男 </input>
+          </div>`,
+        data() {
+          return {
+            checked: false,
+          };
+        },
+        activated() {
+          console.log("home - 激活");
+        },
+        deactivated() {
+          console.log("home - 失效");
+        },
+      });
+      Vue.component("Post", {
+        template: "<div>post</div>",
+        activated() {
+          console.log("post - 激活");
+        },
+        deactivated() {
+          console.log("post  - 失效");
+        },
+      });
+      Vue.component("Archive", {
+        template: "<div>Archive</div>",
+      });
+
+      const app = new Vue({
+        el: "#dynamic-component-demo",
+        data: {
+          msg: "hello world",
+          showComponent: "Home",
+        },
+        methods: {
+          changeComponent(componentName) {
+            this.showComponent = componentName;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

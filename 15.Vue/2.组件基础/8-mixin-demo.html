@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>template</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      const MousemoveMixin = {
+        data() {
+          return {
+            x: 0,
+            y: 0,
+          };
+        },
+        methods: {
+          handleMousemove(e) {
+            this.x = e.pageX;
+            this.y = e.pageY;
+          },
+        },
+
+        mounted() {
+          window.addEventListener("mousemove", this.handleMousemove);
+        },
+
+        destroyed() {
+          window.removeEventListener("mousemove", this.handleMousemove);
+        },
+      };
+
+      // x , y
+      const Foo = {
+        // mixins: [MousemoveMixin],
+        // 1. 来源不清晰的问题
+        // 2. 命名冲突的问题
+        mixins: [MousemoveMixin, fooMixin, barMixin, otherMixin],
+        template: `<div> foo - x:{{x}} - y:{{y}}</div>`,
+      };
+
+      const Bar = {
+        mixins: [MousemoveMixin],
+
+        template: `<div> Bar - x:{{x}} - y:{{y}}</div>`,
+      };
+      const app = new Vue({
+        el: "#app",
+        components: {
+          Foo,
+          Bar,
+        },
+        template: `
+            <div>app
+              <Foo></Foo>
+              <Bar></Bar>
+              </div>
+        `,
+      });
+    </script>
+  </body>
+</html>
