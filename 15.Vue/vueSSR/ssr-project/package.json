@@ -1,0 +1,30 @@
+{
+  "name": "ssr-project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build:client": "vue-cli-service build --dest dist/client",
+    "build:server": "SSR=1 vue-cli-service build --dest dist/server",
+    "build": "npm run build:client && npm run build:server"
+  },
+  "dependencies": {
+    "@vue/server-renderer": "^3.2.4",
+    "core-js": "^3.6.5",
+    "koa": "^2.13.1",
+    "koa-mount": "^4.0.0",
+    "koa-router": "^10.0.0",
+    "koa-static": "^5.0.0",
+    "vue": "^3.2.4",
+    "vue-loader": "^16.5.0",
+    "vue-router": "^4.0.0-0",
+    "webpack-manifest-plugin": "^4.0.2",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0"
+  }
+}
