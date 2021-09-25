@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js"></script>
+</head>
+<body>
+<div id="app">
+<!-- <router-view v-if></router-view> -->
+</div>
+<script>
+	var app = new Vue({
+		el: '#app',
+		template: `
+          <div @click="handleClick">state.count is {{ state.count }}</div>
+		`,
+		data() {
+			return {
+				state: {
+
+				}
+			}
+		},
+		methods: {
+			// vue2 对象 是有响应式处理的
+			// vue2 使用 Object.defineProperty 来实现数据劫持
+			// vue3 Proxy
+			handleClick() {
+				this.state.count = this.state.count ? this.state.count++ : 1
+			}
+		}
+	})
+</script>
+</body>
+</html>
